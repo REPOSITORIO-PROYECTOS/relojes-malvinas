@@ -171,13 +171,19 @@ export default function App() {
     <div className="min-h-screen bg-background">
       <Header 
         cartItemsCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-        onCartClick={() => setIsCartOpen(true)}
-        onSearchClick={() => setIsSearchOpen(true)}
+        onCartClick={() => {
+          setIsSearchOpen(false);
+          setIsCartOpen(true);
+        }}
+        onSearchClick={() => {
+          setIsCartOpen(false);
+          setIsSearchOpen(true);
+        }}
         currentPage={currentPage}
         onNavigate={setCurrentPage}
       />
 
-      <main className="pt-40 md:pt-44">
+      <main>
         {currentPage === 'home' && (
           <HomePage onNavigate={setCurrentPage} />
         )}

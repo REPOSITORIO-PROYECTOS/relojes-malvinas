@@ -91,7 +91,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-24">
       {/* Hero Section */}
       <section className="relative h-[80vh] bg-gradient-to-br from-primary to-accent flex items-center justify-center overflow-hidden">
         <div 
@@ -112,7 +112,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </p>
           <button
             onClick={() => onNavigate('catalog')}
-            className="bg-white text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-muted transition-all transform hover:scale-105 shadow-2xl"
+            className="bg-white text-primary px-8 py-4 rounded-xl text-lg font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
           >
             Explorar Catálogo
           </button>

@@ -49,12 +49,12 @@ export function SearchModal({
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] transition-opacity"
         onClick={onClose}
       />
 
       {/* Search Modal */}
-      <div className="fixed top-0 left-0 right-0 z-50 mx-auto max-w-3xl">
+      <div className="fixed top-0 left-0 right-0 z-[110] mx-auto max-w-3xl">
         <div className="bg-white m-4 md:m-8 rounded-2xl shadow-2xl max-h-[80vh] flex flex-col">
           {/* Search Input */}
           <div className="p-4 border-b border-primary/10 bg-primary">

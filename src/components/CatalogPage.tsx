@@ -72,45 +72,48 @@ export function CatalogPage({ watches, onAddToCart, onViewDetail }: CatalogPageP
   const hasActiveFilters = selectedCategory !== 'all' || selectedStock !== 'all' || selectedPriceRange !== 'all' || selectedSort !== 'default' || searchQuery !== '';
 
   return (
-    <div>
-      {/* Search Bar - Fixed */}
-      <div className="bg-white border-b border-primary/10 sticky top-24 md:top-32 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar por nombre, marca o características..."
-                className="w-full pl-12 pr-4 py-3 border border-primary/20 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 bg-muted"
-              />
+    <div className="pt-24">
+      {/* Search Bar & Filters - Sticky Container */}
+      <div className="bg-white/95 backdrop-blur-md border-b border-primary/10 sticky top-[80px] z-40 shadow-sm transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex flex-col gap-3">
+            {/* Search Row */}
+            <div className="flex items-center gap-2">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar relojes..."
+                  className="w-full pl-10 pr-4 py-2 border border-primary/10 rounded-xl focus:outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 bg-muted/50 text-sm transition-all"
+                />
+              </div>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="flex items-center gap-2 px-3 py-2 bg-primary/10 text-primary rounded-xl hover:bg-primary hover:text-white transition-all text-xs font-bold"
+                >
+                  <X size={14} />
+                  <span className="hidden sm:inline">Limpiar</span>
+                </button>
+              )}
             </div>
-            {hasActiveFilters && (
-              <button
-                onClick={clearFilters}
-                className="flex items-center gap-2 px-4 py-3 bg-primary text-white rounded-lg hover:bg-accent transition-colors"
-              >
-                <X size={18} />
-                <span className="hidden md:inline">Limpiar Todo</span>
-              </button>
-            )}
+
+            {/* Filters Row - Integrated */}
+            <FilterBar 
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedStock={selectedStock}
+              setSelectedStock={setSelectedStock}
+              selectedPriceRange={selectedPriceRange}
+              setSelectedPriceRange={setSelectedPriceRange}
+              selectedSort={selectedSort}
+              setSelectedSort={setSelectedSort}
+            />
           </div>
         </div>
       </div>
-
-      {/* Filters - Not sticky, just at the top */}
-      <FilterBar 
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        selectedStock={selectedStock}
-        setSelectedStock={setSelectedStock}
-        selectedPriceRange={selectedPriceRange}
-        setSelectedPriceRange={setSelectedPriceRange}
-        selectedSort={selectedSort}
-        setSelectedSort={setSelectedSort}
-      />
 
       {/* Results */}
       <main className="max-w-7xl mx-auto px-4 py-12">

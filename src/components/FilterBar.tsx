@@ -51,37 +51,34 @@ export function FilterBar({
   ];
 
   return (
-    <div className="bg-white border-b border-primary/10 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="space-y-4">
-          {/* Category Selector */}
-          <div>
-            <label className="block text-xs font-semibold text-primary mb-2">
-              Categoría
-            </label>
-            <div className="grid grid-cols-5 gap-2">
+    <div className="bg-transparent">
+      <div className="mx-auto">
+        <div className="flex flex-col gap-4">
+          {/* Top Row: Categories (Horizontal Scroll on Mobile) */}
+          <div className="overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+            <div className="flex md:grid md:grid-cols-5 gap-2 min-w-max md:min-w-0">
               {categories.map(category => {
                 const Icon = category.icon;
                 return (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`relative p-2 rounded-lg border-2 transition-all ${
+                    className={`relative flex items-center gap-2 p-2 rounded-xl border-2 transition-all whitespace-nowrap ${
                       selectedCategory === category.id
-                        ? 'border-primary bg-primary/5 scale-105'
-                        : 'border-primary/10 hover:border-primary/30 hover:bg-muted'
+                        ? 'border-primary bg-primary/5 shadow-sm'
+                        : 'border-primary/5 hover:border-primary/20 hover:bg-muted/50'
                     }`}
                   >
-                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mx-auto mb-1`}>
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center shrink-0`}>
                       <Icon size={16} className="text-white" />
                     </div>
-                    <p className={`text-xs font-medium text-center ${
+                    <span className={`text-xs font-bold uppercase tracking-tight ${
                       selectedCategory === category.id ? 'text-primary' : 'text-muted-foreground'
                     }`}>
                       {category.name}
-                    </p>
+                    </span>
                     {selectedCategory === category.id && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center border-2 border-white shadow-sm">
                         <Check size={10} className="text-white" />
                       </div>
                     )}
@@ -91,34 +88,25 @@ export function FilterBar({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Stock Selector */}
-            <div>
-              <label className="block text-xs font-semibold text-primary mb-2">
-                Disponibilidad
-              </label>
-              <div className="flex gap-2">
+          {/* Bottom Row: Stock, Price, Sort (Grid that collapses) */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {/* Stock Selector (Compact) */}
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex bg-muted/50 p-1 rounded-xl gap-1 border border-primary/5">
                 {stockOptions.map(option => {
                   const Icon = option.icon;
                   return (
                     <button
                       key={option.id}
                       onClick={() => setSelectedStock(option.id as 'all' | 'inStock' | 'onOrder')}
-                      className={`flex-1 p-2 rounded-lg border-2 transition-all ${
+                      className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                         selectedStock === option.id
-                          ? 'border-primary bg-primary text-white'
-                          : 'border-primary/10 hover:border-primary/30 bg-white'
+                          ? 'bg-white shadow-sm text-primary'
+                          : 'text-muted-foreground hover:text-primary'
                       }`}
                     >
-                      <div className="flex flex-col items-center gap-1">
-                        {Icon && <Icon size={14} />}
-                        <p className="text-xs font-medium">{option.name}</p>
-                        <p className={`text-[10px] ${
-                          selectedStock === option.id ? 'text-white/80' : 'text-muted-foreground'
-                        }`}>
-                          {option.description}
-                        </p>
-                      </div>
+                      {Icon && <Icon size={14} />}
+                      <span className="text-[11px] font-semibold whitespace-nowrap">{option.name}</span>
                     </button>
                   );
                 })}
@@ -126,35 +114,41 @@ export function FilterBar({
             </div>
 
             {/* Price Range Selector */}
-            <div>
-              <label className="block text-xs font-semibold text-primary mb-2">
-                Precio
-              </label>
+            <div className="relative group">
               <select
                 value={selectedPriceRange}
                 onChange={(e) => setSelectedPriceRange(e.target.value)}
-                className="w-full p-2 rounded-lg border-2 border-primary/10 focus:border-primary focus:outline-none bg-white text-sm"
+                className="w-full pl-9 pr-8 py-2.5 rounded-xl border-2 border-primary/5 focus:border-primary/30 focus:ring-4 focus:ring-primary/5 focus:outline-none bg-muted/50 hover:bg-muted/80 text-[11px] font-bold uppercase tracking-wider text-primary appearance-none cursor-pointer transition-all"
               >
                 {priceRanges.map(range => (
-                  <option key={range.id} value={range.id}>{range.name}</option>
+                  <option key={range.id} value={range.id} className="text-sm font-sans uppercase">Precio: {range.name}</option>
                 ))}
               </select>
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-primary/60 group-hover:text-primary transition-colors">
+                <DollarSign size={14} strokeWidth={3} />
+              </div>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none border-l border-primary/10 pl-2 text-primary/40 group-hover:text-primary transition-colors">
+                <TrendingDown size={14} />
+              </div>
             </div>
 
             {/* Sort Selector */}
-            <div>
-              <label className="block text-xs font-semibold text-primary mb-2">
-                Ordenar
-              </label>
+            <div className="relative group">
               <select
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value)}
-                className="w-full p-2 rounded-lg border-2 border-primary/10 focus:border-primary focus:outline-none bg-white text-sm"
+                className="w-full pl-9 pr-8 py-2.5 rounded-xl border-2 border-primary/5 focus:border-primary/30 focus:ring-4 focus:ring-primary/5 focus:outline-none bg-muted/50 hover:bg-muted/80 text-[11px] font-bold uppercase tracking-wider text-primary appearance-none cursor-pointer transition-all"
               >
                 {sortOptions.map(option => (
-                  <option key={option.id} value={option.id}>{option.name}</option>
+                  <option key={option.id} value={option.id} className="text-sm font-sans uppercase">Orden: {option.name}</option>
                 ))}
               </select>
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-primary/60 group-hover:text-primary transition-colors">
+                <Sparkles size={14} strokeWidth={3} />
+              </div>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none border-l border-primary/10 pl-2 text-primary/40 group-hover:text-primary transition-colors">
+                <TrendingUp size={14} />
+              </div>
             </div>
           </div>
         </div>

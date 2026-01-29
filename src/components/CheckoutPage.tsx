@@ -43,7 +43,7 @@ export function CheckoutPage({ items, onBack }: CheckoutPageProps) {
 
   if (orderComplete) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-16">
+      <div className="max-w-2xl mx-auto px-4 py-16 pt-24">
         <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle size={48} className="text-green-600" />
@@ -68,7 +68,7 @@ export function CheckoutPage({ items, onBack }: CheckoutPageProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 pt-24">
       {/* Back Button */}
       <button 
         onClick={onBack}
