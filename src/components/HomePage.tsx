@@ -94,15 +94,20 @@ export function HomePage({ onNavigate }: HomePageProps) {
     <div className="min-h-screen pt-24">
       {/* Hero Section */}
       <section className="relative h-[80vh] bg-gradient-to-br from-primary to-accent flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
-          style={{
-            backgroundImage: 'url("/products/WhatsApp Image 2026-01-16 at 11.51.26.jpeg")',
-            opacity: 0.6
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-black/50 z-10"></div>
-        <div className="relative z-20 max-w-4xl mx-auto px-4 text-center text-white">
+        {/* Background Layer */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
+            style={{
+              backgroundImage: 'url("/products/WhatsApp Image 2026-01-16 at 11.51.26.jpeg")',
+              opacity: 0.6
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        {/* Content Layer */}
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">Relojes Las Malvinas</h1>
           <p className="text-xl md:text-2xl mb-4 text-white/90">
             Distribuidores Oficiales de las Mejores Marcas de Relojería
@@ -111,8 +116,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
             Más de 15 años llevando exclusividad y prestigio a tu muñeca. Trabajamos con las marcas más reconocidas del mundo para ofrecerte piezas únicas de alta relojería.
           </p>
           <button
-            onClick={() => onNavigate('catalog')}
-            className="bg-white text-primary px-8 py-4 rounded-xl text-lg font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
+            onClick={() => {
+              onNavigate('catalog');
+              window.scrollTo(0, 0);
+            }}
+            className="bg-white text-primary px-8 py-4 rounded-xl text-lg font-bold uppercase tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg cursor-pointer relative z-30"
           >
             Explorar Catálogo
           </button>
@@ -161,11 +169,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 key={index}
                 className="group flex flex-col items-center text-center transition-all duration-300 hover:scale-105"
               >
-                <div className="p-8 rounded-full mb-6 bg-transparent group-hover:bg-primary/5 transition-all duration-300">
+                <div className="p-7 rounded-full mb-5 bg-transparent group-hover:bg-primary/5 transition-all duration-300">
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="w-32 h-32 object-contain filter drop-shadow-md"
+                    className="w-28 h-28 object-contain filter drop-shadow-md"
                   />
                 </div>
                 <p className="text-3xl font-bold text-gray-600 group-hover:text-primary transition-colors">{brand.name}</p>
@@ -191,7 +199,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 <div
                   key={category.id}
                   className="group cursor-pointer bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col"
-                  onClick={() => onNavigate('catalog')}
+                  onClick={() => {
+                    onNavigate('catalog');
+                    window.scrollTo(0, 0);
+                  }}
                 >
                   <div className="relative h-64 overflow-hidden">
                     <img
